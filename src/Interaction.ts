@@ -71,7 +71,15 @@ export class Interaction {
         });
     }
 
+    showModal(modal){
+        this.reply({
+            type: 9,
+            components: [modal]
+        });
+    }
+
     reply(data){
+        let newData = {};
         let flags = 0; //SUPPRESS_EMBEDS 1 << 2 | EPHEMERAL 1 << 6
         if(data["ephemeral"] && data["ephemeral"] === true){
             flags += 1<<6;
@@ -79,12 +87,22 @@ export class Interaction {
         if(data["suppressEmbeds"] && data["suppressEmbeds"] === true){
             flags += 1<<2;
         }
+        if(data["content"]){
+            newData["content"] = data.content;
+        }
+        if(data["components"]){
+            newData["components"] = data.components;
+        }
+        if(data["embeds"]){
+            newData["embeds"] = data.embeds;
+        }
+        if(data["allowedMentions"]){
+            newData["allowed_mentions"] = data.allowedMentions;
+        }
+        newData["flags"] = flags;
         data = {
             type: data.type ?? 4,
-            data: {
-                content: data.content,
-                flags
-            }
+            data: newData
         };
         return new Promise((res, rej)=>{
             axios.post(`https://discord.com/api/v10/interactions/${this.id}/${this.token}/callback`,data).then(()=>{
