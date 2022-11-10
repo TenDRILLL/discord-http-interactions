@@ -1,0 +1,26 @@
+{
+  "name": "discord.js-http",
+  "version": "1.0.0",
+  "description": "discord.js-http",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TenDRILLL/discord.js-http.git"
+  },
+  "author": "Ten#0010",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TenDRILLL/discord.js-http/issues"
+  },
+  "homepage": "https://github.com/TenDRILLL/discord.js-http#readme",
+  "dependencies": {
+    "@types/node": "^18.11.9",
+    "axios": "^1.1.3",
+    "discord-interactions": "^3.2.0",
+    "express": "^4.18.2",
+    "typescript": "^4.8.4"
+  }
+}
