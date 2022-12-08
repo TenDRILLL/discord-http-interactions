@@ -1,0 +1,71 @@
+import {APIMessage} from "discord-api-types/v10";
+import {MessageInteraction} from "./MessageInteraction";
+import {User} from "./User";
+import {WebhookUser} from "./WebhookUser";
+import {ChannelMention} from "./ChannelMention";
+import {Attachment} from "./Attachment";
+import {Embed} from "./Embed";
+
+export class Message {
+    public id: string;
+    public channelId: string;
+    public author: User | WebhookUser;
+    public content: string | null;
+    public timestamp: string;
+    public editedTimestamp: string | null;
+    public tts: boolean;
+    public mentionEveryone: boolean;
+    public mentions: User[];
+    public mentionRoles: string[];
+    public mentionChannels: ChannelMention[] | null;
+    public attachments: Attachment[] | null;
+    public embeds: Embed[] | null;
+    public reactions: Reaction[] | null;
+    public nonce: number | string | null;
+    public pinned: boolean;
+    public webhookId: string | null;
+    public type: number;
+    public activity: MessageActivity | null;
+    public application: Application | null;
+    public applicationId: string | null;
+    public messageReference: MessageReference | null;
+    public flags: number | null;
+    public referencedMessage: Message | null;
+    public interaction: MessageInteraction | null;
+    public thread: ThreadChannel | null;
+    public components: ActionRow[] | null;
+    public stickerItems: MessageStickerItem[] | null;
+    public position: number | null;
+
+    constructor(raw: APIMessage) {
+        this.id = raw.id;
+        this.channelId = raw.channel_id;
+        this.author = raw.webhook_id ? new WebhookUser(raw.author) : new User(raw.author);
+        this.content = raw.content ?? null;
+        this.timestamp = raw.timestamp;
+        this.editedTimestamp = raw.edited_timestamp ?? null;
+        this.tts = raw.tts;
+        this.mentionEveryone = raw.mention_everyone;
+        this.mentions = raw.mentions.map(rawUser => new User(rawUser));
+        this.mentionRoles = raw.mention_roles;
+        this.mentionChannels = raw.mention_channels ? raw.mention_channels.map(rawChannelMention => new ChannelMention(rawChannelMention)) : null;
+        this.attachments = raw.attachments ? raw.attachments.map(rawAttachment => new Attachment(rawAttachment)) : null;
+        this.embeds = raw.embeds ? raw.embeds.map(rawEmbed => new Embed(rawEmbed)) : null;
+        this.reactions = raw.reactions ? raw.reactions.map(rawReaction => new Reaction(rawReaction)) : null;
+        this.nonce = raw.nonce ?? null;
+        this.pinned = raw.pinned;
+        this.webhookId = raw.webhook_id ?? null;
+        this.type = raw.type;
+        this.activity = raw.activity ? new Activity(raw.activity) : null;
+        this.application = raw.application ? new Application(raw.application) : null;
+        this.applicationId = raw.application_id ?? null;
+        this.messageReference = raw.message_reference ? new MessageReference(raw.message_reference) : null;
+        this.flags = raw.flags ?? null;
+        this.referencedMessage = raw.referenced_message ? new Message(raw.referenced_message) : null;
+        this.interaction = raw.interaction ? new MessageInteraction(raw.interaction) : null;
+        this.thread = raw.thread ? new ThreadChannel(raw.thread) : null;
+        this.components = raw.components ? raw.components.map(rawActionRow => new ActionRow(rawActionRow)) : null;
+        this.stickerItems = raw.sticker_items ? raw.sticker_items.map(rawStickerItems => new StickerItems(rawStickerItems)) : null;
+        this.position = raw.position ?? null;
+    }
+}
