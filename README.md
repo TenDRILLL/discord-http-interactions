@@ -1,2 +1,1 @@
-# discord.js-http
-discord.js-http
+# dc-http
