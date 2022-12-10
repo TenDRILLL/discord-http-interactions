@@ -1,6 +1,8 @@
 import {
     APIEmbed,
-    APIEmbedAuthor, APIEmbedField, APIEmbedFooter,
+    APIEmbedAuthor,
+    APIEmbedField,
+    APIEmbedFooter,
     APIEmbedImage,
     APIEmbedProvider,
     APIEmbedThumbnail,

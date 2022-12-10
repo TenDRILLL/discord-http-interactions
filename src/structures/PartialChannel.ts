@@ -5,7 +5,7 @@ export class PartialChannel {
     public id: string;
     public name: string | null;
 
-    constructor(raw: APIPartialChannel){
+    constructor(raw: APIPartialChannel) {
         this.type = raw.type;
         this.id = raw.id;
         this.name = raw.name ?? null;

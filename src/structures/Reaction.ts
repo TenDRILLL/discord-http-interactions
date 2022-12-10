@@ -5,6 +5,7 @@ export class Reaction {
     public count: number;
     public me: boolean;
     public emoji: PartialEmoji;
+
     constructor(raw: APIReaction) {
         this.count = raw.count;
         this.me = raw.me;

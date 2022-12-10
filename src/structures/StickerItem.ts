@@ -5,7 +5,7 @@ export class StickerItem {
     public name: string;
     public formatType: number;
 
-    constructor(raw: APIStickerItem){
+    constructor(raw: APIStickerItem) {
         this.id = raw.id;
         this.name = raw.id;
         this.formatType = raw.format_type;
