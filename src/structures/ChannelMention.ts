@@ -1,3 +1,4 @@
+import {APIChannelMention} from "discord-api-types/v10";
 export class ChannelMention {
     public id: string;
     public guildId: string;
