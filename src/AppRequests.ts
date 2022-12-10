@@ -1,5 +1,5 @@
 import { verifyKey } from "discord-interactions";
-import { Client } from "./Client";
+import Client from "./Client";
 import { Interaction } from "./structures/Interaction";
 import { APIInteraction } from "discord-api-types/v10";
 

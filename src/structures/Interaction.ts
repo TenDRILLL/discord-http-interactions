@@ -1,5 +1,5 @@
 import {APIInteraction, APIPingInteraction, Routes} from "discord-api-types/v10";
-import {Client} from "../Client";
+import Client from "../Client";
 import {GuildMember} from "./GuildMember";
 import {User} from "./User";
 import {Message} from "./Message";
