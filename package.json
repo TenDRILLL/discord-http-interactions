@@ -1,5 +1,5 @@
 {
-  "name": "dc-http",
+  "name": "discord-http-interactions",
   "version": "1.0.0",
   "description": "A JS library to use Discord without the Bot Gateway using HTTP interactions",
   "main": "index.js",
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TenDRILLL/discord.js-http.git"
+    "url": "git+https://github.com/TenDRILLL/discord-http-interactions.git"
   },
   "author": "Ten#0010",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/TenDRILLL/discord.js-http/issues"
+    "url": "https://github.com/TenDRILLL/discord-http-interactions/issues"
   },
-  "homepage": "https://github.com/TenDRILLL/discord.js-http#readme",
+  "homepage": "https://github.com/TenDRILLL/discord-http-interactions#readme",
   "dependencies": {
     "@discordjs/rest": "^1.4.0",
     "@types/node": "^18.11.9",
@@ -23,5 +23,6 @@
     "discord-interactions": "^3.2.0",
     "express": "^4.18.2",
     "typescript": "^4.8.4"
-  }
+  },
+  "devDependencies": {}
 }
