@@ -1,10 +1,17 @@
-import {APIMessage} from "discord-api-types/v10";
+import {APIMessage, APIThreadChannel} from "discord-api-types/v10";
 import {MessageInteraction} from "./MessageInteraction";
 import {User} from "./User";
 import {WebhookUser} from "./WebhookUser";
 import {ChannelMention} from "./ChannelMention";
 import {Attachment} from "./Attachment";
 import {Embed} from "./Embed";
+import {Reaction} from "./Reaction";
+import {MessageActivity} from "./MessageActivity";
+import {Application} from "./Application";
+import {MessageReference} from "./MessageReference";
+import {StickerItem} from "./StickerItem";
+import {ActionRow} from "./ActionRow";
+import {ThreadChannel} from "./ThreadChannel";
 
 export class Message {
     public id: string;
@@ -34,7 +41,7 @@ export class Message {
     public interaction: MessageInteraction | null;
     public thread: ThreadChannel | null;
     public components: ActionRow[] | null;
-    public stickerItems: MessageStickerItem[] | null;
+    public stickerItems: StickerItem[] | null;
     public position: number | null;
 
     constructor(raw: APIMessage) {
@@ -56,16 +63,16 @@ export class Message {
         this.pinned = raw.pinned;
         this.webhookId = raw.webhook_id ?? null;
         this.type = raw.type;
-        this.activity = raw.activity ? new Activity(raw.activity) : null;
+        this.activity = raw.activity ? new MessageActivity(raw.activity) : null;
         this.application = raw.application ? new Application(raw.application) : null;
         this.applicationId = raw.application_id ?? null;
         this.messageReference = raw.message_reference ? new MessageReference(raw.message_reference) : null;
         this.flags = raw.flags ?? null;
         this.referencedMessage = raw.referenced_message ? new Message(raw.referenced_message) : null;
         this.interaction = raw.interaction ? new MessageInteraction(raw.interaction) : null;
-        this.thread = raw.thread ? new ThreadChannel(raw.thread) : null;
-        this.components = raw.components ? raw.components.map(rawActionRow => new ActionRow(rawActionRow)) : null;
-        this.stickerItems = raw.sticker_items ? raw.sticker_items.map(rawStickerItems => new StickerItems(rawStickerItems)) : null;
+        this.thread = raw.thread ? new ThreadChannel(raw.thread as APIThreadChannel) : null;
+        this.components = raw.components ? raw.components.map(rawActionRowComponents => new ActionRow(rawActionRowComponents)) : null;
+        this.stickerItems = raw.sticker_items ? raw.sticker_items.map(rawStickerItems => new StickerItem(rawStickerItems)) : null;
         this.position = raw.position ?? null;
     }
 }
