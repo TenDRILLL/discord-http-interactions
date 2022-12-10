@@ -1,8 +1,8 @@
 {
   "name": "discord-http-interactions",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "A JS library to use Discord without the Bot Gateway using HTTP interactions",
-  "main": "index.js",
+  "main": "built/index.js",
   "scripts": {
     "build": "tsc --build"
   },

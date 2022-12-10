@@ -3,7 +3,7 @@ import express from "express";
 import {AppRequests} from "./AppRequests";
 import {REST} from "@discordjs/rest";
 
-export class Client extends EventEmitter {
+export default class Client extends EventEmitter {
     private readonly token: string | null;
     public publicKey: string;
     public port: number;
