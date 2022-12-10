@@ -11,17 +11,19 @@ export class AppRequests {
 
     verifyDiscordRequest(){
         return (req, res, buf) => {
-            if (!verifyKey(buf, req.get("X-Signature-Ed25519"), req.get("X-Signature-Timestamp"), this.client.publicKey)) res.status(401).send("Bad request signature");
+            if (!verifyKey(buf, req.get("X-Signature-Ed25519"), req.get("X-Signature-Timestamp"), this.client.publicKey)) return res.sendStatus(401).end();
         };
     }
 
     listener(){
         this.client.app.post(this.client.endpoint, (req,res)=>{
+            if(res.finished) return;
             const interaction: APIInteraction = req.body;
             if(interaction.type === 1){
-                return res.send({type: 1}); //Reply to Discord's Ping.
+                return res.status(200).send({type: 1}); //Reply to Discord's Ping.
             } else {
                 this.client.emit("interaction",new Interaction(interaction, this.client));
+                return res.sendStatus(200);
             }
         });
     }
