@@ -4,15 +4,15 @@ import {AppRequests} from "./AppRequests";
 import {REST} from "@discordjs/rest";
 
 export class Client extends EventEmitter {
-    private token: string;
+    private readonly token: string | null;
     public publicKey: string;
-    private port: number;
+    public port: number;
     public endpoint: string;
     public app;
     private requests;
     public rest;
 
-    constructor(params){
+    constructor(params: ParameterObject){
         super();
         this._validateParams(params);
         this.token = params.token;
@@ -25,7 +25,7 @@ export class Client extends EventEmitter {
     }
 
     _validateParams(params){
-        if(!(params["token"])) console.warn("NO_TOKEN_PROVIDED: No Token provided in the Client Constructor. This will restrict certain functionalities.");
+        if(!(params["token"])) throw new Error("NO_TOKEN_PROVIDED: No Token provided in the Client Constructor.");
         if(!(params["publicKey"])) throw new Error("NO_PUBLIC_KEY_PROVIDED: No Public Key provided in the Client Constructor.");
         if(!(params["endpoint"])) throw new Error("NO_ENDPOINT_PROVIDED: No Endpoint provided in the Client Constructor.");
         if(!(params["port"])) throw new Error("NO_PORT_PROVIDED: No Port provided in the Client Constructor.");
@@ -40,4 +40,11 @@ export class Client extends EventEmitter {
             this.emit("error",e);
         });
     }
+}
+
+export class ParameterObject {
+    public token: string;
+    public publicKey: string;
+    public port: number;
+    public endpoint: string;
 }
