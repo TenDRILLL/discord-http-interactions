@@ -1,4 +1,6 @@
 # discord-http-interactions
+[![NPM Version](https://img.shields.io/npm/v/discord-http-interactions?color=37c6ff&style=plastic)](https://www.npmjs.com/package/discord-http-interactions)
+
 A JS library to use Discord without the Bot Gateway using HTTP interactions
 
 Usage:
