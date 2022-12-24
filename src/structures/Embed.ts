@@ -37,6 +37,73 @@ export class Embed {
         this.author = raw.author ? new EmbedAuthor(raw.author) : null;
         this.fields = raw.fields ? raw.fields.map(rawField => new EmbedField(rawField)) : null;
     }
+
+    setTitle(title: string): Embed {
+        this.title = title;
+        return this;
+    }
+
+    setDescription(desc: string): Embed {
+        this.description = desc;
+        return this;
+    }
+
+    setUrl(url: string): Embed {
+        this.url = url;
+        return this;
+    }
+
+    setTimestamp(timestamp: string): Embed {
+        this.timestamp = timestamp;
+        return this;
+    }
+
+    setColor(color: number): Embed {
+        this.color = color;
+        return this;
+    }
+
+    setFooter(text: string, iconUrl?: string){
+        let raw = {text};
+        if(iconUrl) raw["icon_url"] = iconUrl;
+        this.footer = new EmbedFooter(raw);
+    }
+
+    setImage(url: string): Embed {
+        this.image = new EmbedImage({url});
+        return this;
+    }
+
+    setThumbnail(url: string): Embed {
+        this.thumbnail = new EmbedThumbnail({url});
+        return this;
+    }
+
+    setAuthor(name: string, url?: string, iconUrl?: string): Embed {
+        let raw = {name};
+        if(url) raw["url"] = url;
+        if(iconUrl) raw["icon_url"] = iconUrl;
+        this.author = new EmbedAuthor(raw);
+        return this;
+    }
+
+    setFields(fields: RawEmbedField[]): Embed {
+        this.fields = fields.map(x => new EmbedField(x));
+        return this;
+    }
+
+    addFields(fields: RawEmbedField[]): Embed {
+        let fieldArray: EmbedField[] = [];
+        if(this.fields) fieldArray = [...this.fields];
+        this.fields = [...fieldArray,...fields.map(x => new EmbedField(x))];
+        return this;
+    }
+}
+
+export class RawEmbedField {
+    name: string;
+    value: string;
+    inline?: boolean;
 }
 
 export class EmbedFooter {
