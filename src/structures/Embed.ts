@@ -9,7 +9,7 @@ import {
     APIEmbedVideo
 } from "discord-api-types/v10";
 
-export class Embed {
+export default class Embed {
     public title: string | null;
     public description: string | null;
     public url: string | null;

@@ -1,0 +1,27 @@
+const ChannelType = {
+    GuildText: 0,
+    DM: 1,
+    GuildVoice: 2,
+    GroupDM: 3,
+    GuildCategory: 4,
+    GuildAnnouncement: 5,
+    AnnouncementThread: 10,
+    PublicThread: 11,
+    PrivateThread: 12,
+    GuildStageVoice: 13,
+    GuildDirectory: 14,
+    GuildForum: 15,
+    0: "GuildText",
+    1: "DM",
+    2: "GuildVoice",
+    3: "GroupDM",
+    4: "GuildCategory",
+    5: "GuildAnnouncement",
+    10: "AnnouncementThread",
+    11: "PublicThread",
+    12: "PrivateThread",
+    13: "GuildStageVoice",
+    14: "GuildDirectory",
+    15: "GuildForum"
+};
+export default ChannelType;

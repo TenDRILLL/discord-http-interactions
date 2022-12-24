@@ -4,7 +4,7 @@ import {User} from "./User";
 import {WebhookUser} from "./WebhookUser";
 import {ChannelMention} from "./ChannelMention";
 import {Attachment} from "./Attachment";
-import {Embed} from "./Embed";
+import Embed from "./Embed";
 import {Reaction} from "./Reaction";
 import {MessageActivity} from "./MessageActivity";
 import {Application} from "./Application";
