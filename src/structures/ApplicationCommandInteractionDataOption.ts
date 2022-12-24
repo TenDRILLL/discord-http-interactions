@@ -5,6 +5,8 @@ import {ApplicationCommandInteractionOptionChoice} from "./ApplicationCommandInt
 export class ApplicationCommandInteractionDataOption {
     public type: number;
     public name: string;
+    public value: string | number | boolean | null;
+    public focused: boolean | null;
     public nameLocalizations: LocalizationDictionary | null;
     public description: string | null;
     public descriptionLocalizations: LocalizationDictionary | null;
@@ -21,6 +23,8 @@ export class ApplicationCommandInteractionDataOption {
     constructor(raw: APIApplicationCommandInteractionDataOption | APIApplicationCommandSubcommandOption | APIApplicationCommandSubcommandGroupOption | APIApplicationCommandStringOption | APIApplicationCommandIntegerOption | APIApplicationCommandBooleanOption | APIApplicationCommandUserOption | APIApplicationCommandChannelOption | APIApplicationCommandRoleOption | APIApplicationCommandMentionableOption | APIApplicationCommandNumberOption | APIApplicationCommandAttachmentOption) {
         this.type = raw.type;
         this.name = raw.name;
+        this.value = "value" in raw && raw.value !== undefined ? raw.value : null;
+        this.focused = "focused" in raw && raw.focused !== undefined ? raw.focused : null;
         this.nameLocalizations = "name_localizations" in raw && raw.name_localizations !== undefined ? raw.name_localizations : null;
         this.description = "description" in raw && raw.description !== undefined ? raw.description : null;
         this.descriptionLocalizations = "description_localizations" in raw && raw.description_localizations !== undefined ? raw.description_localizations : null;
