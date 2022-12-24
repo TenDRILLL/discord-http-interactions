@@ -23,19 +23,19 @@ export class Embed {
     public author: EmbedAuthor | null;
     public fields: EmbedField[] | null;
 
-    constructor(raw: APIEmbed) {
-        this.title = raw.title ?? null;
-        this.description = raw.description ?? null;
-        this.url = raw.url ?? null;
-        this.timestamp = raw.timestamp ?? null;
-        this.color = raw.color ?? null;
-        this.footer = raw.footer ? new EmbedFooter(raw.footer) : null;
-        this.image = raw.image ? new EmbedImage(raw.image) : null;
-        this.thumbnail = raw.thumbnail ? new EmbedThumbnail(raw.thumbnail) : null;
-        this.video = raw.video ? new EmbedVideo(raw.video) : null;
-        this.provider = raw.provider ? new EmbedProvider(raw.provider) : null;
-        this.author = raw.author ? new EmbedAuthor(raw.author) : null;
-        this.fields = raw.fields ? raw.fields.map(rawField => new EmbedField(rawField)) : null;
+    constructor(raw?: APIEmbed) {
+        this.title = raw?.title ?? null;
+        this.description = raw?.description ?? null;
+        this.url = raw?.url ?? null;
+        this.timestamp = raw?.timestamp ?? null;
+        this.color = raw?.color ?? null;
+        this.footer = raw?.footer ? new EmbedFooter(raw.footer) : null;
+        this.image = raw?.image ? new EmbedImage(raw.image) : null;
+        this.thumbnail = raw?.thumbnail ? new EmbedThumbnail(raw.thumbnail) : null;
+        this.video = raw?.video ? new EmbedVideo(raw.video) : null;
+        this.provider = raw?.provider ? new EmbedProvider(raw.provider) : null;
+        this.author = raw?.author ? new EmbedAuthor(raw.author) : null;
+        this.fields = raw?.fields ? raw.fields.map(rawField => new EmbedField(rawField)) : null;
     }
 
     setTitle(title: string): Embed {
