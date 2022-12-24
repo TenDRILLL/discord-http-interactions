@@ -23,7 +23,7 @@ export class AppRequests {
                 return res.status(200).send({type: 1}); //Reply to Discord's Ping.
             } else {
                 this.client.emit("interaction",new Interaction(interaction, this.client));
-                return res.sendStatus(200);
+                return res.status(200);
             }
         });
     }
