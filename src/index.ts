@@ -1,2 +1,3 @@
 import Client from "./Client";
-export {Client}
+import {Embed} from "./structures/Embed";
+export {Client, Embed};
