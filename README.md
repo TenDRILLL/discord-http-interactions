@@ -7,7 +7,7 @@ const client = new Client({
     token: string,
     publicKey: string,
     port: number,
-    endpoint: string,
+    endpoint: string, (prefixed with / )
 });
 
 client.on("ready",()=>{
