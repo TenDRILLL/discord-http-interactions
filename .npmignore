@@ -2,5 +2,4 @@
 .github/
 node_modules/
 src/
-README.md
 tsconfig.json
