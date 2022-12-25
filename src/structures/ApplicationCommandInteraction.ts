@@ -6,9 +6,11 @@ import {ResolvedData} from "./ResolvedData";
 
 export class ApplicationCommandInteraction extends Interaction {
     public data: ApplicationCommandInteractionData;
+    public commandName: string;
     constructor(raw: APIApplicationCommandInteraction, client: Client) {
         super(raw, client);
         this.data = new ApplicationCommandInteractionData(raw.data);
+        this.commandName = this.data.name;
     }
 }
 
