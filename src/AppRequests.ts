@@ -1,10 +1,11 @@
-import { verifyKey } from "discord-interactions";
+import {verifyKey} from "discord-interactions";
 import Client from "./Client";
 import {APIApplicationCommandInteraction, APIInteraction, APIMessageComponentInteraction, APIApplicationCommandAutocompleteInteraction, APIModalSubmitInteraction} from "discord-api-types/v10";
 import InteractionType from "./structures/InteractionType";
 import {ApplicationCommandInteraction} from "./structures/ApplicationCommandInteraction";
 import {Interaction} from "./structures/Interaction";
 import {MessageComponentInteraction} from "./structures/MessageComponentInteraction";
+import {ApplicationCommandAutocompleteInteraction} from "./structures/ApplicationCommandAutocompleteInteraction";
 
 export class AppRequests {
     private readonly client: Client;
@@ -34,8 +35,8 @@ export class AppRequests {
                     this.client.emit("interaction", new MessageComponentInteraction(interaction as APIMessageComponentInteraction, this.client));
                     break;
                 case InteractionType.ApplicationCommandAutocomplete:
-                    //this.client.emit("interaction", new ApplicationCommandAutocompleteInteraction(interaction as APIApplicationCommandAutocompleteInteraction, this.client));
-                    //break;
+                    this.client.emit("interaction", new ApplicationCommandAutocompleteInteraction(interaction as APIApplicationCommandAutocompleteInteraction, this.client));
+                    break;
                 case InteractionType.ModalSubmit:
                     //this.client.emit("interaction", new ModalSubmitInteraction(interaction as APIModalSubmitInteraction, this.client));
                     //break;
