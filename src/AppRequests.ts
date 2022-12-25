@@ -4,9 +4,10 @@ import {APIApplicationCommandInteraction, APIInteraction, APIMessageComponentInt
 import InteractionType from "./structures/InteractionType";
 import {ApplicationCommandInteraction} from "./structures/ApplicationCommandInteraction";
 import {Interaction} from "./structures/Interaction";
+import {MessageComponentInteraction} from "./structures/MessageComponentInteraction";
 
 export class AppRequests {
-    private client: Client;
+    private readonly client: Client;
     constructor(client){
         this.client = client;
     }
@@ -30,8 +31,8 @@ export class AppRequests {
                     this.client.emit("interaction", new ApplicationCommandInteraction(interaction as APIApplicationCommandInteraction, this.client));
                     break;
                 case InteractionType.MessageComponent:
-                    //this.client.emit("interaction", new MessageComponentInteraction(interaction as APIMessageComponentInteraction, this.client));
-                    //break;
+                    this.client.emit("interaction", new MessageComponentInteraction(interaction as APIMessageComponentInteraction, this.client));
+                    break;
                 case InteractionType.ApplicationCommandAutocomplete:
                     //this.client.emit("interaction", new ApplicationCommandAutocompleteInteraction(interaction as APIApplicationCommandAutocompleteInteraction, this.client));
                     //break;

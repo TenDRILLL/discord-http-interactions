@@ -1,7 +1,7 @@
 import {Interaction} from "./Interaction";
 import {APIApplicationCommandInteraction, APIApplicationCommandInteractionData} from "discord-api-types/v10";
 import Client from "../Client";
-import {ApplicationCommandInteractionOption} from "./ApplicationCommandInteractionOption";
+import {ApplicationCommandInteractionDataOption} from "./ApplicationCommandInteractionDataOption";
 import {ResolvedData} from "./ResolvedData";
 
 export class ApplicationCommandInteraction extends Interaction {
@@ -19,7 +19,7 @@ export class ApplicationCommandInteractionData {
     public name: string;
     public type: number;
     public resolved: ResolvedData | null;
-    public options: ApplicationCommandInteractionOption[] | null;
+    public options: ApplicationCommandInteractionDataOption[] | null;
     public guildId: string | null;
     public targetId: string | null;
 
@@ -28,7 +28,7 @@ export class ApplicationCommandInteractionData {
         this.name = raw.name;
         this.type = raw.type;
         this.resolved = raw.resolved ? new ResolvedData(raw.resolved) : null;
-        this.options = "options" in raw && raw.options !== undefined ? raw.options.map(rawOption => new ApplicationCommandInteractionOption(rawOption)) : null;
+        this.options = "options" in raw && raw.options !== undefined ? raw.options.map(rawOption => new ApplicationCommandInteractionDataOption(rawOption)) : null;
         this.guildId = raw.guild_id ?? null;
         this.targetId = "target_id" in raw ? raw.target_id : null;
     }
