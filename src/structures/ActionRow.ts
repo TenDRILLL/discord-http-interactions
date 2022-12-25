@@ -4,46 +4,71 @@ import {
     APIModalActionRowComponent,
     ComponentType
 } from "discord-api-types/v10";
-import {ButtonComponent} from "./ButtonComponent";
-import {StringSelectComponent} from "./StringSelectComponent";
-import {ChannelSelectComponent} from "./ChannelSelectComponent";
-import {MentionableSelectComponent} from "./MentionableSelectComponent";
-import {RoleSelectComponent} from "./RoleSelectComponent";
-import {UserSelectComponent} from "./UserSelectComponent";
-import {TextInputComponent} from "./TextInputComponent";
+import Button from "./Button";
+import {StringSelectMenu} from "./StringSelectMenu";
+import {ChannelSelectMenu} from "./ChannelSelectMenu";
+import {MentionableSelectMenu} from "./MentionableSelectMenu";
+import {RoleSelectMenu} from "./RoleSelectMenu";
+import {UserSelectMenu} from "./UserSelectMenu";
+import {TextInput} from "./TextInput";
+import MessageComponentType from "./MessageComponentType";
 
-export class ActionRow {
+export default class ActionRow {
     public type: number;
     public components: (
-        ButtonComponent |
-        StringSelectComponent |
-        ChannelSelectComponent |
-        MentionableSelectComponent |
-        RoleSelectComponent |
-        UserSelectComponent |
-        TextInputComponent |
+        Button |
+        StringSelectMenu |
+        ChannelSelectMenu |
+        MentionableSelectMenu |
+        RoleSelectMenu |
+        UserSelectMenu |
+        TextInput |
         null)[];
 
-    constructor(raw: APIActionRowComponent<APIMessageActionRowComponent | APIModalActionRowComponent>) {
-        this.type = 1;
-        this.components = raw.components.map(rawComponent => {
+    constructor(raw?: APIActionRowComponent<APIMessageActionRowComponent | APIModalActionRowComponent>) {
+        this.type = MessageComponentType.ActionRow;
+        this.components = raw && "components" in raw ? raw.components.map(rawComponent => {
             if(rawComponent.type === ComponentType.Button){
-                return new ButtonComponent(rawComponent);
+                return new Button(rawComponent);
             } else if(rawComponent.type === ComponentType.StringSelect){
-                return new StringSelectComponent(rawComponent);
+                return new StringSelectMenu(rawComponent);
             } else if(rawComponent.type === ComponentType.ChannelSelect){
-                return new ChannelSelectComponent(rawComponent);
+                return new ChannelSelectMenu(rawComponent);
             } else if(rawComponent.type === ComponentType.MentionableSelect){
-                return new MentionableSelectComponent(rawComponent);
+                return new MentionableSelectMenu(rawComponent);
             } else if(rawComponent.type === ComponentType.RoleSelect){
-                return new RoleSelectComponent(rawComponent);
+                return new RoleSelectMenu(rawComponent);
             } else if(rawComponent.type === ComponentType.UserSelect) {
-                return new UserSelectComponent(rawComponent);
+                return new UserSelectMenu(rawComponent);
             } else if(rawComponent.type === ComponentType.TextInput) {
-                return new TextInputComponent(rawComponent);
+                return new TextInput(rawComponent);
             } else {
                 return null;
             }
-        });
+        }) : [];
+    }
+
+    setComponents(components: (
+        Button |
+        StringSelectMenu |
+        ChannelSelectMenu |
+        MentionableSelectMenu |
+        RoleSelectMenu |
+        UserSelectMenu |
+        TextInput)[]): ActionRow {
+        this.components = components;
+        return this;
+    }
+
+    addComponents(components: (
+        Button |
+        StringSelectMenu |
+        ChannelSelectMenu |
+        MentionableSelectMenu |
+        RoleSelectMenu |
+        UserSelectMenu |
+        TextInput)[]): ActionRow {
+        this.components = [...this.components, ...components];
+        return this;
     }
 }
