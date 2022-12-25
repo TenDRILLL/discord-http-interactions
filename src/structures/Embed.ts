@@ -108,25 +108,25 @@ export class RawEmbedField {
 
 export class EmbedFooter {
     public text: string;
-    public iconUrl: string | null;
-    public proxyIconUrl: string | null;
+    public icon_url: string | null;
+    public proxy_icon_url: string | null;
 
     constructor(raw: APIEmbedFooter) {
         this.text = raw.text;
-        this.iconUrl = raw.icon_url ?? null;
-        this.proxyIconUrl = raw.proxy_icon_url ?? null;
+        this.icon_url = raw.icon_url ?? null;
+        this.proxy_icon_url = raw.proxy_icon_url ?? null;
     }
 }
 
 export class EmbedImage {
     public url: string;
-    public proxyUrl: string | null;
+    public proxy_url: string | null;
     public height: number | null;
     public width: number | null;
 
     constructor(raw: APIEmbedImage) {
         this.url = raw.url;
-        this.proxyUrl = raw.proxy_url ?? null;
+        this.proxy_url = raw.proxy_url ?? null;
         this.height = raw.height ?? null;
         this.width = raw.width ?? null;
     }
@@ -134,13 +134,13 @@ export class EmbedImage {
 
 export class EmbedThumbnail {
     public url: string;
-    public proxyUrl: string | null;
+    public proxy_url: string | null;
     public height: number | null;
     public width: number | null;
 
     constructor(raw: APIEmbedThumbnail) {
         this.url = raw.url;
-        this.proxyUrl = raw.proxy_url ?? null;
+        this.proxy_url = raw.proxy_url ?? null;
         this.height = raw.height ?? null;
         this.width = raw.width ?? null;
     }
@@ -148,13 +148,13 @@ export class EmbedThumbnail {
 
 export class EmbedVideo {
     public url: string | null;
-    public proxyUrl: string | null;
+    public proxy_url: string | null;
     public height: number | null;
     public width: number | null;
 
     constructor(raw: APIEmbedVideo) {
         this.url = raw.url ?? null;
-        this.proxyUrl = raw.proxy_url ?? null;
+        this.proxy_url = raw.proxy_url ?? null;
         this.height = raw.height ?? null;
         this.width = raw.width ?? null;
     }
@@ -173,14 +173,14 @@ export class EmbedProvider {
 export class EmbedAuthor {
     public name: string;
     public url: string | null;
-    public iconUrl: string | null;
-    public proxyIconUrl: string | null;
+    public icon_url: string | null;
+    public proxy_icon_url: string | null;
 
     constructor(raw: APIEmbedAuthor) {
         this.name = raw.name;
         this.url = raw.url ?? null;
-        this.iconUrl = raw.icon_url ?? null;
-        this.proxyIconUrl = raw.proxy_icon_url ?? null;
+        this.icon_url = raw.icon_url ?? null;
+        this.proxy_icon_url = raw.proxy_icon_url ?? null;
     }
 }
 

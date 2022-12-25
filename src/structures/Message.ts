@@ -10,7 +10,7 @@ import {MessageActivity} from "./MessageActivity";
 import {Application} from "./Application";
 import {MessageReference} from "./MessageReference";
 import {StickerItem} from "./StickerItem";
-import {ActionRow} from "./ActionRow";
+import ActionRow from "./ActionRow";
 import {ThreadChannel} from "./ThreadChannel";
 
 export class Message {

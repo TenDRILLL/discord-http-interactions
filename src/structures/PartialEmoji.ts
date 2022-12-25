@@ -11,3 +11,9 @@ export class PartialEmoji {
         this.animated = raw.animated ?? null;
     }
 }
+
+export class RawPartialEmoji {
+    public id: string | null;
+    public name: string | null;
+    public animated: boolean | null;
+}

@@ -4,10 +4,10 @@ export class Attachment {
     public id: string;
     public filename: string;
     public description: string | null;
-    public contentType: string | null;
+    public content_type: string | null;
     public size: number;
     public url: string;
-    public proxyUrl: string;
+    public proxy_url: string;
     public height: number | null;
     public width: number | null;
     public ephemeral: boolean | null;
@@ -16,10 +16,10 @@ export class Attachment {
         this.id = raw.id;
         this.filename = raw.filename;
         this.description = raw.description ?? null;
-        this.contentType = raw.content_type ?? null;
+        this.content_type = raw.content_type ?? null;
         this.size = raw.size;
         this.url = raw.url;
-        this.proxyUrl = raw.proxy_url;
+        this.proxy_url = raw.proxy_url;
         this.height = raw.height ?? null;
         this.width = raw.width ?? null;
         this.ephemeral = raw.ephemeral ?? null;

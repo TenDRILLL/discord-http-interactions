@@ -1,13 +1,13 @@
 import {APIRoleTags} from "discord-api-types/v10";
 
 export class RoleTags {
-    public botId: string | null;
-    public integrationId: string | null;
-    public premiumSubscriber: null;
+    public bot_id: string | null;
+    public integration_id: string | null;
+    public premium_subscriber: null;
 
     constructor(raw: APIRoleTags) {
-        this.botId = raw.bot_id ?? null;
-        this.integrationId = raw.integration_id ?? null;
-        this.premiumSubscriber = raw.premium_subscriber ?? null;
+        this.bot_id = raw.bot_id ?? null;
+        this.integration_id = raw.integration_id ?? null;
+        this.premium_subscriber = raw.premium_subscriber ?? null;
     }
 }

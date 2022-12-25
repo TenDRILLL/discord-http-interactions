@@ -7,7 +7,7 @@ export class Role {
     public color: number;
     public hoist: boolean;
     public icon: string | null;
-    public unicodeEmoji: string | null;
+    public unicode_emoji: string | null;
     public position: number;
     public permissions: string;
     public managed: boolean;
@@ -20,7 +20,7 @@ export class Role {
         this.color = raw.color;
         this.hoist = raw.hoist;
         this.icon = raw.icon ?? null;
-        this.unicodeEmoji = raw.unicode_emoji ?? null;
+        this.unicode_emoji = raw.unicode_emoji ?? null;
         this.position = raw.position;
         this.permissions = raw.permissions;
         this.managed = raw.managed;
