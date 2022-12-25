@@ -10,12 +10,12 @@ import ActionRow from "./ActionRow";
 
 export class ModalSubmitInteraction extends Interaction {
     public data: ModalSubmitInteractionData;
-    public custom_id: string;
+    public customId: string;
 
     constructor(raw: APIModalSubmitInteraction, client: Client) {
         super(raw, client);
         this.data = new ModalSubmitInteractionData(raw.data);
-        this.custom_id = this.data.custom_id;
+        this.customId = this.data.custom_id;
     }
 }
 

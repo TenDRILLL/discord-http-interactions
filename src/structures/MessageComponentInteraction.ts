@@ -4,12 +4,12 @@ import {APIMessageComponentInteraction, APIMessageComponentInteractionData} from
 
 export class MessageComponentInteraction extends Interaction {
     public data: MessageComponentInteractionData;
-    public custom_id: string;
+    public customId: string;
 
     constructor(raw: APIMessageComponentInteraction, client: Client) {
         super(raw, client);
         this.data = new MessageComponentInteractionData(raw.data);
-        this.custom_id = this.data.custom_id;
+        this.customId = this.data.custom_id;
     }
 }
 
