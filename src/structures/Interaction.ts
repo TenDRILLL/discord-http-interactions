@@ -3,6 +3,7 @@ import Client from "../Client";
 import {GuildMember} from "./GuildMember";
 import {User} from "./User";
 import {Message} from "./Message";
+import {AutocompleteReplyData, InteractionDeferData, InteractionReplyData} from "./InteractionReplyDataType";
 
 export class Interaction {
     public id: string;
@@ -38,7 +39,8 @@ export class Interaction {
         this.client = client;
     }
 
-    reply(data){
+    reply(data: InteractionReplyData | AutocompleteReplyData){
+        data = this._formatData(data);
         return new Promise(async (res,rej)=>{
             try {
                 const reply = await this.client.rest.post(Routes.interactionCallback(this.id,this.token),{body: {type: 4, data}});
@@ -49,7 +51,8 @@ export class Interaction {
         });
     }
 
-    newMessage(data){
+    newMessage(data: InteractionReplyData){
+        data = this._formatData(data);
         return new Promise(async (res,rej)=>{
             try {
                 const reply = await this.client.rest.post(Routes.channelMessages(this.channelId!),{body: data});
@@ -60,7 +63,8 @@ export class Interaction {
         });
     }
 
-    editReply(data){
+    editReply(data: InteractionReplyData){
+        data = this._formatData(data);
         return new Promise(async (res,rej)=>{
             try {
                 const reply = await this.client.rest.patch(Routes.webhookMessage(this.applicationId,this.token,"@original"),{body: data});
@@ -71,7 +75,8 @@ export class Interaction {
         });
     }
 
-    defer(data = {}){
+    defer(data: InteractionDeferData){
+        data = this._formatData(data);
         return new Promise(async (res,rej)=>{
             try {
                 const reply = await this.client.rest.post(Routes.interactionCallback(this.id,this.token),{body: {type: 5, data}});
@@ -83,6 +88,7 @@ export class Interaction {
     }
 
     update(data){
+        data = this._formatData(data);
         return new Promise(async (res,rej)=>{
             try {
                 const reply = await this.client.rest.post(Routes.interactionCallback(this.id,this.token), {body: {type: 7, data}});
@@ -105,7 +111,7 @@ export class Interaction {
         });
     }
 
-    autocomplete(data){
+    autocomplete(data: AutocompleteReplyData){
         return new Promise(async (res,rej)=>{
             try {
                 const reply = await this.client.rest.post(Routes.interactionCallback(this.id,this.token),{body: {type: 8, data}});
@@ -114,5 +120,29 @@ export class Interaction {
                 rej(e);
             }
         });
+    }
+
+    /*modal(modal: Modal){
+        return new Promise(async (res,rej)=>{
+            try {
+                const reply = await this.client.rest.post(Routes.interactionCallback(this.id,this.token), {body: {type: 9, modal}});
+                res(reply);
+            } catch(e){
+                rej(e);
+            }
+        });
+    }*/
+
+    _formatData(data){
+        data["flags"] = 0;
+        if("ephemeral" in data && data.ephemeral === true){
+            data["flags"] |= 1 << 6;
+            data.ephemeral = undefined;
+        }
+        if("suppressEmbeds" in data && data.suppressEmbeds === true){
+            data["flags"] |= 1 << 2;
+            data.suppressEmbeds = undefined;
+        }
+        return data;
     }
 }
