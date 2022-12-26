@@ -75,7 +75,8 @@ export class Interaction {
         });
     }
 
-    defer(data: InteractionDeferData){
+    defer(data?: InteractionDeferData){
+        if(data === undefined) data = {};
         data = this._formatData(data);
         return new Promise(async (res,rej)=>{
             try {
@@ -87,7 +88,19 @@ export class Interaction {
         });
     }
 
-    update(data){
+    deferUpdate(){
+        const data = {};
+        return new Promise(async (res,rej)=>{
+            try {
+                const reply = await this.client.rest.post(Routes.interactionCallback(this.id,this.token), {body: {type: 6, data}});
+                res(reply);
+            } catch(e){
+                rej(e);
+            }
+        });
+    }
+
+    update(data: InteractionReplyData){
         data = this._formatData(data);
         return new Promise(async (res,rej)=>{
             try {
