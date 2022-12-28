@@ -3,7 +3,7 @@ import Client from "../Client";
 import {GuildMember} from "./GuildMember";
 import {User} from "./User";
 import {Message} from "./Message";
-import {AutocompleteReplyData, InteractionDeferData, InteractionReplyData} from "./InteractionReplyDataType";
+import {AutocompleteChoice, InteractionDeferData, InteractionReplyData} from "./InteractionReplyDataType";
 
 export class Interaction {
     public id: string;
@@ -39,7 +39,7 @@ export class Interaction {
         this.client = client;
     }
 
-    reply(data: InteractionReplyData | AutocompleteReplyData){
+    reply(data: InteractionReplyData){
         data = this._formatData(data);
         return new Promise(async (res,rej)=>{
             try {
@@ -124,10 +124,10 @@ export class Interaction {
         });
     }
 
-    autocomplete(data: AutocompleteReplyData){
+    autocomplete(data: AutocompleteChoice[]){
         return new Promise(async (res,rej)=>{
             try {
-                const reply = await this.client.rest.post(Routes.interactionCallback(this.id,this.token),{body: {type: 8, data}});
+                const reply = await this.client.rest.post(Routes.interactionCallback(this.id,this.token),{body: {type: 8, choices: data}});
                 res(reply);
             } catch(e){
                 rej(e);
