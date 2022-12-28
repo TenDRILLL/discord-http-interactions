@@ -127,7 +127,7 @@ export class Interaction {
     autocomplete(data: AutocompleteChoice[]){
         return new Promise(async (res,rej)=>{
             try {
-                const reply = await this.client.rest.post(Routes.interactionCallback(this.id,this.token),{body: {type: 8, choices: data}});
+                const reply = await this.client.rest.post(Routes.interactionCallback(this.id,this.token),{body: {type: 8, data: {choices: data}}});
                 res(reply);
             } catch(e){
                 rej(e);
