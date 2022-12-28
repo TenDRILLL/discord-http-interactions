@@ -8,6 +8,7 @@ export default class Client extends EventEmitter {
     public publicKey: string;
     public port: number;
     public endpoint: string;
+    public linkedRolesEndpoint?: string;
     public app;
     private requests;
     public rest;
@@ -19,6 +20,7 @@ export default class Client extends EventEmitter {
         this.publicKey = params.publicKey;
         this.port = params.port;
         this.endpoint = params.endpoint;
+        this.linkedRolesEndpoint = params.linkedRolesEndpoint;
         this.app = express();
         this.requests = new AppRequests(this);
         this.rest = new REST({version: "10"}).setToken(this.token);
@@ -45,4 +47,5 @@ export class ParameterObject {
     public publicKey: string;
     public port: number;
     public endpoint: string;
+    public linkedRolesEndpoint?: string;
 }

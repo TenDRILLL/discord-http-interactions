@@ -44,5 +44,13 @@ export class AppRequests {
                     return console.warn(`Interaction with type: ${interaction.type} (${InteractionType[interaction.type] ?? "UNKNOWN"}) is not yet implemented with this library.`);
             }
         });
+        if(this.client.linkedRolesEndpoint){
+            console.warn("Linked Roles endpoint is experimental, no typings provided yet.");
+            this.client.app.post(this.client.linkedRolesEndpoint, (req,res)=>{
+                if(res.finished) return;
+                res.status(200);
+                return this.client.emit("linkedRoles", req.body);
+            });
+        }
     }
 }
