@@ -150,11 +150,11 @@ export class Interaction {
         data["flags"] = 0;
         if("ephemeral" in data && data.ephemeral === true){
             data["flags"] |= 1 << 6;
-            data.ephemeral = undefined;
+            delete data.ephemeral;
         }
         if("suppressEmbeds" in data && data.suppressEmbeds === true){
             data["flags"] |= 1 << 2;
-            data.suppressEmbeds = undefined;
+            delete data.suppressEmbeds;
         }
         return data;
     }
