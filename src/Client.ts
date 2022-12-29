@@ -9,6 +9,7 @@ import {MessageReference} from "./structures/MessageReference";
 import ActionRow from "./structures/ActionRow";
 import {Attachment} from "./structures/Attachment";
 import ApplicationCommandObject from "./structures/ApplicationCommandObject";
+import {GuildMember} from "./structures/GuildMember";
 
 export default class Client extends EventEmitter {
     private readonly token: string | null;
@@ -78,6 +79,28 @@ export default class Client extends EventEmitter {
             }
         });
     }
+
+    getMember(guildId:string, memberId:string): Promise<GuildMember>{
+        return new Promise(async (res,rej)=>{
+            try {
+                const member = await this.rest.get(Routes.guildMember(guildId,memberId));
+                res(new GuildMember(member));
+            } catch(e){
+                rej(e);
+            }
+        });
+    }
+
+    setMember(guildId:string, memberId: string, data: GuildMemberModifyData){
+        return new Promise(async (res,rej)=>{
+            try {
+                const x = await this.rest.patch(Routes.guildMember(guildId,memberId),{body: data});
+                res(x);
+            } catch(e){
+                rej(e);
+            }
+        });
+    }
 }
 
 export class ParameterObject {
@@ -101,4 +124,13 @@ export class MessageCreateData {
     payload_json?: null;
     attachments?: Attachment[];
     suppressEmbeds?: boolean;
+}
+
+export class GuildMemberModifyData {
+    nick?: string;
+    roles?: string[];
+    mute?: boolean;
+    deaf?: boolean;
+    channel_id?: string;
+    communication_disabled_until?: string;
 }
