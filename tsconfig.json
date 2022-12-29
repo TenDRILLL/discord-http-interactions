@@ -8,7 +8,9 @@
     "moduleResolution": "Node",
     "allowSyntheticDefaultImports": true,
     "module": "commonjs",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "declaration": true,
+    "declarationMap": true
   },
   "include": ["src"]
 }
