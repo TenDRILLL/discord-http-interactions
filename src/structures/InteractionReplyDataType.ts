@@ -2,6 +2,7 @@ import Embed from "./Embed";
 import ActionRow from "./ActionRow";
 import {Attachment} from "./Attachment";
 import {AllowedMentions} from "./AllowedMentions";
+import {LocalizationDictionary} from "./LocalizationDictionary";
 
 export class AutocompleteReplyData {
     public choices: AutocompleteChoice[];
@@ -9,6 +10,7 @@ export class AutocompleteReplyData {
 
 export class AutocompleteChoice {
     public name: string;
+    public name_localizations?: LocalizationDictionary;
     public value: string;
 }
 

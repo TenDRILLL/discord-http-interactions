@@ -8,6 +8,7 @@ import {AllowedMentions} from "./structures/AllowedMentions";
 import {MessageReference} from "./structures/MessageReference";
 import ActionRow from "./structures/ActionRow";
 import {Attachment} from "./structures/Attachment";
+import ApplicationCommandObject from "./structures/ApplicationCommandObject";
 
 export default class Client extends EventEmitter {
     private readonly token: string | null;
@@ -57,6 +58,22 @@ export default class Client extends EventEmitter {
                 const x = await this.rest.post(Routes.channelMessages(channelId),{body: data});
                 res(x);
             } catch(e) {
+                rej(e);
+            }
+        });
+    }
+
+    registerCommands(applicationId: string, commands: ApplicationCommandObject[], guildId?: string){
+        return new Promise(async (res,rej)=>{
+            try {
+                if(guildId){
+                    const x = await this.rest.put(Routes.applicationGuildCommands(applicationId,guildId),{body: commands});
+                    res(x);
+                } else {
+                    const x = await this.rest.put(Routes.applicationCommands(applicationId),{body: commands});
+                    res(x);
+                }
+            } catch(e){
                 rej(e);
             }
         });
