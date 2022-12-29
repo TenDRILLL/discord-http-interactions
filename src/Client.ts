@@ -2,6 +2,12 @@ import {EventEmitter} from "events";
 import express from "express";
 import {AppRequests} from "./AppRequests";
 import {REST} from "@discordjs/rest";
+import {Routes} from "discord-api-types/v10";
+import Embed from "./structures/Embed";
+import {AllowedMentions} from "./structures/AllowedMentions";
+import {MessageReference} from "./structures/MessageReference";
+import ActionRow from "./structures/ActionRow";
+import {Attachment} from "./structures/Attachment";
 
 export default class Client extends EventEmitter {
     private readonly token: string | null;
@@ -40,6 +46,21 @@ export default class Client extends EventEmitter {
             e ? this.emit("error",e) : this.emit("ready");
         });
     }
+
+    newMessage(channelId: string, data: MessageCreateData){
+        if(data.suppressEmbeds){
+            data["suppress_embeds"] = data.suppressEmbeds;
+            delete data.suppressEmbeds;
+        }
+        return new Promise(async (res, rej) => {
+            try {
+                const x = await this.rest.post(Routes.channelMessages(channelId),{body: data});
+                res(x);
+            } catch(e) {
+                rej(e);
+            }
+        });
+    }
 }
 
 export class ParameterObject {
@@ -48,4 +69,19 @@ export class ParameterObject {
     public port: number;
     public endpoint: string;
     public linkedRolesEndpoint?: string;
+}
+
+export class MessageCreateData {
+    content?: string;
+    nonce?: number | string;
+    tts?: boolean;
+    embeds?: Embed[];
+    allowed_mentions?: AllowedMentions;
+    message_reference?: MessageReference;
+    components?: ActionRow[];
+    sticker_ids?: string[];
+    files?: null;
+    payload_json?: null;
+    attachments?: Attachment[];
+    suppressEmbeds?: boolean;
 }
