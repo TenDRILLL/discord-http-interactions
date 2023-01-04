@@ -67,6 +67,7 @@ export default class Embed {
         let raw = {text};
         if(iconUrl) raw["icon_url"] = iconUrl;
         this.footer = new EmbedFooter(raw);
+        return this;
     }
 
     setImage(url: string): Embed {
