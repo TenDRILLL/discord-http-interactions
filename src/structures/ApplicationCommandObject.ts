@@ -2,7 +2,7 @@ import {LocalizationDictionary} from "./LocalizationDictionary";
 import {AutocompleteChoice} from "./InteractionReplyDataType";
 
 export default class ApplicationCommandObject {
-    type: number;
+    type?: number;
     name: string;
     name_localizations?: LocalizationDictionary;
     description: string;
