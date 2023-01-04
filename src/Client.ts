@@ -17,6 +17,7 @@ export default class Client extends EventEmitter {
     public port: number;
     public endpoint: string;
     public linkedRolesEndpoint?: string;
+    public additionalEndpoints?: {name: string, endpoint: string, method: string}[];
     public app;
     private requests;
     public rest;
@@ -29,16 +30,16 @@ export default class Client extends EventEmitter {
         this.port = params.port;
         this.endpoint = params.endpoint;
         this.linkedRolesEndpoint = params.linkedRolesEndpoint;
+        this.additionalEndpoints = params.additionalEndpoints;
         this.app = express();
         this.requests = new AppRequests(this);
         this.rest = new REST({version: "10"}).setToken(this.token);
     }
 
     _validateParams(params){
-        if(!(params["token"])) throw new Error("NO_TOKEN_PROVIDED: No Token provided in the Client Constructor.");
-        if(!(params["publicKey"])) throw new Error("NO_PUBLIC_KEY_PROVIDED: No Public Key provided in the Client Constructor.");
-        if(!(params["endpoint"])) throw new Error("NO_ENDPOINT_PROVIDED: No Endpoint provided in the Client Constructor.");
-        if(!(params["port"])) throw new Error("NO_PORT_PROVIDED: No Port provided in the Client Constructor.");
+        for(const key of ["token","publicKey","endpoint","port"]){
+            if(!params[key]) throw new Error(`NO_${key.toUpperCase()}_PROVIDED: No ${key} provided in the Client Constructor.`);
+        }
     }
 
     login(){
@@ -109,6 +110,7 @@ export class ParameterObject {
     public port: number;
     public endpoint: string;
     public linkedRolesEndpoint?: string;
+    public additionalEndpoints?: {name: string, endpoint: string, method: string}[];
 }
 
 export class MessageCreateData {
