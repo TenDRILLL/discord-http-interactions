@@ -100,7 +100,8 @@ export class Interaction {
         });
     }
 
-    update(data: InteractionReplyData){
+    update(data?: InteractionReplyData){
+        if(data === undefined) data = {};
         data = this._formatData(data);
         return new Promise(async (res,rej)=>{
             try {
