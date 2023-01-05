@@ -1,5 +1,6 @@
 import {APIRole} from "discord-api-types/v10";
 import {RoleTags} from "./RoleTags";
+import {Permissions} from "./Permissions";
 
 export class Role {
     public id: string;
@@ -9,7 +10,7 @@ export class Role {
     public icon: string | null;
     public unicode_emoji: string | null;
     public position: number;
-    public permissions: string;
+    public permissions: Permissions;
     public managed: boolean;
     public mentionable: boolean;
     public tags: RoleTags | null;
@@ -22,7 +23,7 @@ export class Role {
         this.icon = raw.icon ?? null;
         this.unicode_emoji = raw.unicode_emoji ?? null;
         this.position = raw.position;
-        this.permissions = raw.permissions;
+        this.permissions = new Permissions(raw.permissions);
         this.managed = raw.managed;
         this.mentionable = raw.mentionable
         this.tags = raw.tags ? new RoleTags(raw.tags) : null;

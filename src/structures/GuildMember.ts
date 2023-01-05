@@ -1,6 +1,7 @@
 import {User} from "./User";
-import {APIGuildMember} from "discord-api-types/v10";
+import {APIGuildMember, APIInteractionGuildMember} from "discord-api-types/v10";
 import {PartialGuildMember} from "./PartialGuildMember";
+import {Permissions} from "./Permissions";
 
 export class GuildMember extends PartialGuildMember {
     public deaf: boolean;
@@ -11,10 +12,10 @@ export class GuildMember extends PartialGuildMember {
     public joinedAt: string;
     public premiumSince: string | null;
     public pending: boolean | null;
-    //public permissions: string | null; //Discord API claims to have this, but DAPI doesn't. Therefore not implementing it.
+    public permissions: Permissions | null; //Discord API claims to have this, but DAPI doesn't.
     public communicationDisabledUntil: string | null;
 
-    constructor(raw: APIGuildMember) {
+    constructor(raw: APIGuildMember | APIInteractionGuildMember) {
         super(raw);
         this.deaf = raw.deaf;
         this.mute = raw.mute;
@@ -25,7 +26,7 @@ export class GuildMember extends PartialGuildMember {
         this.joinedAt = raw.joined_at ?? null;
         this.premiumSince = raw.premium_since ?? null;
         this.pending = raw.pending ?? null;
-        //this.permissions = raw.permissions ?? null;
+        this.permissions = "permissions" in raw ? new Permissions(raw.permissions) : null;
         this.communicationDisabledUntil = raw.communication_disabled_until ?? null;
     }
 }
