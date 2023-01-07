@@ -1,4 +1,4 @@
-import {verifyKey} from "discord-interactions";
+import {verifyKeyMiddleware} from "discord-interactions";
 import Client from "./Client";
 import {APIApplicationCommandInteraction, APIInteraction, APIMessageComponentInteraction, APIApplicationCommandAutocompleteInteraction, APIModalSubmitInteraction} from "discord-api-types/v10";
 import InteractionType from "./structures/InteractionType";
@@ -13,14 +13,8 @@ export class AppRequests {
         this.client = client;
     }
 
-    verifyDiscordRequest(){
-        return (req, res, buf) => {
-            if (!verifyKey(buf, req.get("X-Signature-Ed25519"), req.get("X-Signature-Timestamp"), this.client.publicKey)) return res.sendStatus(401).end();
-        };
-    }
-
     listener(){
-        this.client.app.post(this.client.endpoint, (req,res)=>{
+        this.client.app.post(this.client.endpoint, verifyKeyMiddleware(this.client.publicKey), (req,res)=>{
             if(res.finished) return;
             res.status(200);
             const interaction: APIInteraction = req.body;
@@ -46,7 +40,7 @@ export class AppRequests {
         });
         if(this.client.linkedRolesEndpoint){
             console.warn("[WARN] Linked Roles endpoint is experimental, no typings provided yet.");
-            this.client.app.post(this.client.linkedRolesEndpoint, (req,res)=>{
+            this.client.app.post(this.client.linkedRolesEndpoint, verifyKeyMiddleware(this.client.publicKey), (req,res)=>{
                 if(res.finished) return;
                 res.status(200);
                 return this.client.emit("linkedRoles", req.body);

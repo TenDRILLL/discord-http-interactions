@@ -43,7 +43,6 @@ export default class Client extends EventEmitter {
     }
 
     login(){
-        this.app.use(express.json({verify: this.requests.verifyDiscordRequest()}));
         this.requests.listener();
         this.app.listen(this.port,(e)=>{
             e ? this.emit("error",e) : this.emit("ready");
