@@ -18,7 +18,7 @@ export class InteractionReplyData {
     public tts?: boolean;
     public content?: string;
     public embeds?: Embed[];
-    public allowed_mentions?: AllowedMentions;
+    public allowedMentions?: AllowedMentions;
     public ephemeral?: boolean;
     public suppressEmbeds?: boolean;
     public components?: ActionRow[];

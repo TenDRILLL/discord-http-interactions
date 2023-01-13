@@ -157,6 +157,14 @@ export class Interaction {
             data["flags"] |= 1 << 2;
             delete data.suppressEmbeds;
         }
+        if("allowedMentions" in data && data.allowedMentions !== undefined){
+            data["allowed_mentions"] = data.allowedMentions;
+            if("repliedUser" in data && data.allowedMentions.repliedUser !== undefined){
+                data["allowed_mentions"]["replied_user"] = data.allowedMentions.repliedUser;
+                delete data["allowed_mentions"]["repliedUser"];
+            }
+            delete data.allowedMentions;
+        }
         return data;
     }
 }

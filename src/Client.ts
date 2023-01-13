@@ -117,7 +117,7 @@ export class MessageCreateData {
     nonce?: number | string;
     tts?: boolean;
     embeds?: Embed[];
-    allowed_mentions?: AllowedMentions;
+    allowedMentions?: AllowedMentions;
     message_reference?: MessageReference;
     components?: ActionRow[];
     sticker_ids?: string[];
