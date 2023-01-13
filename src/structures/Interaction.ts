@@ -4,6 +4,7 @@ import {GuildMember} from "./GuildMember";
 import {User} from "./User";
 import {Message} from "./Message";
 import {AutocompleteChoice, InteractionDeferData, InteractionReplyData} from "./InteractionReplyDataType";
+import Modal from "./Modal";
 
 export class Interaction {
     public id: string;
@@ -136,16 +137,30 @@ export class Interaction {
         });
     }
 
-    /*modal(modal: Modal){
+    modal(modal: Modal){
+        modal = this._formatModal(modal);
         return new Promise(async (res,rej)=>{
             try {
-                const reply = await this.client.rest.post(Routes.interactionCallback(this.id,this.token), {body: {type: 9, modal}});
+                const reply = await this.client.rest.post(Routes.interactionCallback(this.id,this.token), {body: {type: 9, data: modal}});
                 res(reply);
             } catch(e){
                 rej(e);
             }
         });
-    }*/
+    }
+
+    _formatModal(modal){
+        modal.components.forEach((x)=>{
+            x.components.forEach((y)=>{
+                Object.keys(y).forEach(key => {
+                    if(y[key] === null){
+                        delete y[key];
+                    }
+                });
+            });
+        });
+        return modal;
+    }
 
     _formatData(data){
         data["flags"] = 0;

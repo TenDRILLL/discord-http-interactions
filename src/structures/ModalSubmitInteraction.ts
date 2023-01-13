@@ -1,30 +1,17 @@
 import {Interaction} from "./Interaction";
 import {
-    APIModalSubmission,
-    APIModalSubmitInteraction,
-    APIActionRowComponent,
-    APIModalActionRowComponent
+    APIModalSubmitInteraction
 } from "discord-api-types/v10";
 import Client from "../Client";
-import ActionRow from "./ActionRow";
+import Modal from "./Modal";
 
 export class ModalSubmitInteraction extends Interaction {
-    public data: ModalSubmitInteractionData;
+    public data: Modal;
     public customId: string;
 
     constructor(raw: APIModalSubmitInteraction, client: Client) {
         super(raw, client);
-        this.data = new ModalSubmitInteractionData(raw.data);
-        this.customId = this.data.custom_id;
-    }
-}
-
-export class ModalSubmitInteractionData {
-    public custom_id: string;
-    public components: ActionRow[];
-
-    constructor(raw: APIModalSubmission) {
-        this.custom_id = raw.custom_id;
-        this.components = raw.components.map(rawComponent => new ActionRow(rawComponent as APIActionRowComponent<APIModalActionRowComponent>));
+        this.data = new Modal(raw.data);
+        this.customId = this.data.custom_id!;
     }
 }

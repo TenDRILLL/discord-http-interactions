@@ -10,8 +10,9 @@ import {ChannelSelectMenu} from "./ChannelSelectMenu";
 import {MentionableSelectMenu} from "./MentionableSelectMenu";
 import {RoleSelectMenu} from "./RoleSelectMenu";
 import {UserSelectMenu} from "./UserSelectMenu";
-import {TextInput} from "./TextInput";
+import TextInput from "./TextInput";
 import MessageComponentType from "./MessageComponentType";
+import {ModalActionRowComponent} from "./ModalActionRowComponent";
 
 export default class ActionRow {
     public type: number;
@@ -23,6 +24,7 @@ export default class ActionRow {
         RoleSelectMenu |
         UserSelectMenu |
         TextInput |
+        ModalActionRowComponent |
         null)[];
 
     constructor(raw?: APIActionRowComponent<APIMessageActionRowComponent | APIModalActionRowComponent>) {
@@ -55,7 +57,8 @@ export default class ActionRow {
         MentionableSelectMenu |
         RoleSelectMenu |
         UserSelectMenu |
-        TextInput)[]): ActionRow {
+        TextInput |
+        ModalActionRowComponent)[]): ActionRow {
         this.components = components;
         return this;
     }
@@ -67,7 +70,8 @@ export default class ActionRow {
         MentionableSelectMenu |
         RoleSelectMenu |
         UserSelectMenu |
-        TextInput)[]): ActionRow {
+        TextInput |
+        ModalActionRowComponent)[]): ActionRow {
         this.components = [...this.components, ...components];
         return this;
     }
