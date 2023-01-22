@@ -16,7 +16,6 @@ export default class Client extends EventEmitter {
     public publicKey: string;
     public port: number;
     public endpoint: string;
-    public linkedRolesEndpoint?: string;
     public additionalEndpoints?: {name: string, endpoint: string, method: string}[];
     public app;
     private requests;
@@ -29,7 +28,6 @@ export default class Client extends EventEmitter {
         this.publicKey = params.publicKey;
         this.port = params.port;
         this.endpoint = params.endpoint;
-        this.linkedRolesEndpoint = params.linkedRolesEndpoint;
         this.additionalEndpoints = params.additionalEndpoints;
         this.app = express();
         this.requests = new AppRequests(this);
@@ -108,7 +106,6 @@ export class ParameterObject {
     public publicKey: string;
     public port: number;
     public endpoint: string;
-    public linkedRolesEndpoint?: string;
     public additionalEndpoints?: {name: string, endpoint: string, method: string}[];
 }
 

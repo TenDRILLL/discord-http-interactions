@@ -38,16 +38,8 @@ export class AppRequests {
                     return console.warn(`[WARN] Interaction with type: ${interaction.type} (${InteractionType[interaction.type] ?? "UNKNOWN"}) is not yet implemented with this library.`);
             }
         });
-        if(this.client.linkedRolesEndpoint){
-            console.warn("[WARN] Linked Roles endpoint is experimental, no typings provided yet.");
-            this.client.app.post(this.client.linkedRolesEndpoint, verifyKeyMiddleware(this.client.publicKey), (req,res)=>{
-                if(res.finished) return;
-                res.status(200);
-                return this.client.emit("linkedRoles", req.body);
-            });
-        }
         if(this.client.additionalEndpoints){
-            const reservedEndpoints = ["interaction", "linkedRoles", "error", "ready"];
+            const reservedEndpoints = ["interaction", "error", "ready"];
             this.client.additionalEndpoints.forEach(endpoint => {
                 if(reservedEndpoints.includes(endpoint.name)) return console.warn(`[WARN] ${endpoint.method} ${endpoint.endpoint} not loaded as "${endpoint.name}" is a reserved event name, please choose another one.`);
                 switch(endpoint.method){
