@@ -10,6 +10,8 @@ import ActionRow from "./structures/ActionRow";
 import {Attachment} from "./structures/Attachment";
 import ApplicationCommandObject from "./structures/ApplicationCommandObject";
 import {GuildMember} from "./structures/GuildMember";
+import axios from "axios";
+import {Emoji} from "./structures/Emoji";
 
 export default class Client extends EventEmitter {
     private readonly token: string | null;
@@ -99,6 +101,55 @@ export default class Client extends EventEmitter {
             }
         });
     }
+
+    createEmoji(guildId:string, emoji: EmojiObject): Promise<Omit<Emoji,"user">>{
+        return new Promise(async (res, rej) => {
+            try {
+                axios.get(emoji.url!, {responseType: "arraybuffer"}).then(d => {
+                    axios.post(`https://discord.com/api/v10${Routes.guildEmojis(guildId)}`, {
+                        name: emoji.name,
+                        image: "data:" + d.headers["content-type"] + ";base64," + Buffer.from(d.data).toString("base64"),
+                        roles: emoji.roles ?? [guildId]
+                    }, {
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bot ${this.token}`
+                        }
+                    }).then(d => res(new Emoji(d.data))).catch(e => rej(e));
+                }).catch(e => rej(e));
+            } catch (e) {
+                rej(e);
+            }
+        });
+    }
+
+    getEmoji(guildid:string, id:string): Promise<Emoji>{
+        return new Promise(async (res,rej)=>{
+            try {
+                const x = await this.rest.get(Routes.guildEmoji(guildid,id));
+                res(new Emoji(x));
+            } catch(e) {
+                rej(e);
+            }
+        });
+    }
+
+    findEmoji(guildid:string, name:string): Promise<Emoji | null>{
+        return new Promise(async (res,rej)=>{
+            try {
+                const x: object[] = await this.rest.get(Routes.guildEmojis(guildid));
+                const emojis = x.map(raw => new Emoji(raw));
+                emojis.forEach(emoji => {
+                    if(emoji.name === name){
+                        res(emoji);
+                    }
+                });
+                res(null);
+            } catch(e) {
+                rej(e);
+            }
+        });
+    }
 }
 
 export class ParameterObject {
@@ -131,4 +182,10 @@ export class GuildMemberModifyData {
     deaf?: boolean;
     channel_id?: string;
     communication_disabled_until?: string;
+}
+
+export class EmojiObject {
+    name: string;
+    url: string;
+    roles?: string[];
 }
