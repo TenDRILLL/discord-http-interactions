@@ -115,10 +115,14 @@ export default class Client extends EventEmitter {
                             "Content-Type": "application/json",
                             "Authorization": `Bot ${this.token}`
                         }
-                    }).then(d => res(new Emoji(d.data))).catch(e => rej(e));
+                    }).then(d => res(new Emoji(d.data))).catch(e => rej(JSON.stringify(e.data.errors)));
                 }).catch(e => rej(JSON.stringify(e.data.errors)));
             } catch (e) {
-                rej(JSON.stringify(e.data.errors));
+                if("data" in e && "errors" in e.data){
+                    rej(JSON.stringify(e.data.errors));
+                } else {
+                    rej(e);
+                }
             }
         });
     }
