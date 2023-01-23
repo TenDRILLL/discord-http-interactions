@@ -2,6 +2,7 @@ import ActionRow from "./structures/ActionRow";
 import Button from "./structures/Button";
 import Client from "./Client";
 import Embed from "./structures/Embed";
+import Emoji from "./structures/Emoji";
 import Modal from "./structures/Modal";
 import TextInput from "./structures/TextInput";
 import ApplicationCommandType from "./structures/ApplicationCommandType";
@@ -17,6 +18,7 @@ export {
     Button,
     Client,
     Embed,
+    Emoji,
     Modal,
     TextInput,
     ApplicationCommandType,

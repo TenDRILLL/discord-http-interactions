@@ -11,7 +11,7 @@ import {Attachment} from "./structures/Attachment";
 import ApplicationCommandObject from "./structures/ApplicationCommandObject";
 import {GuildMember} from "./structures/GuildMember";
 import axios from "axios";
-import {Emoji} from "./structures/Emoji";
+import Emoji from "./structures/Emoji";
 
 export default class Client extends EventEmitter {
     private readonly token: string | null;

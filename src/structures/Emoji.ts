@@ -1,6 +1,6 @@
 import {User} from "./User";
 
-export class Emoji {
+export default class Emoji {
     public name: string;
     public roles: string[];
     public id: string;
