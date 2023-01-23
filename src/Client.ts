@@ -116,9 +116,9 @@ export default class Client extends EventEmitter {
                             "Authorization": `Bot ${this.token}`
                         }
                     }).then(d => res(new Emoji(d.data))).catch(e => rej(e));
-                }).catch(e => rej(e));
+                }).catch(e => rej(JSON.stringify(e.data.errors)));
             } catch (e) {
-                rej(e);
+                rej(JSON.stringify(e.data.errors));
             }
         });
     }
