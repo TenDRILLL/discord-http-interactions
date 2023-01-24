@@ -22,6 +22,7 @@ export default class Client extends EventEmitter {
     public app;
     private requests;
     public rest;
+    public jsonrest;
 
     constructor(params: ParameterObject){
         super();
@@ -34,6 +35,7 @@ export default class Client extends EventEmitter {
         this.app = express();
         this.requests = new AppRequests(this);
         this.rest = new REST({version: "10"}).setToken(this.token);
+        this.jsonrest = new REST({headers: {"Content-Type": "application/json"}, version: "10"}).setToken(this.token);
     }
 
     _validateParams(params){
@@ -105,21 +107,17 @@ export default class Client extends EventEmitter {
     createEmoji(guildId:string, emoji: EmojiObject): Promise<Omit<Emoji,"user">>{
         return new Promise(async (res, rej) => {
             try {
-                axios.get(emoji.url!, {responseType: "arraybuffer"}).then(d => {
-                    axios.post(`https://discord.com/api/v10${Routes.guildEmojis(guildId)}`, {
+                axios.get(emoji.url!, {responseType: "arraybuffer"}).then(async d => {
+                    const x = await this.jsonrest.post(Routes.guildEmojis(guildId),{body:{
                         name: emoji.name,
                         image: "data:" + d.headers["content-type"] + ";base64," + Buffer.from(d.data).toString("base64"),
                         roles: emoji.roles ?? [guildId]
-                    }, {
-                        headers: {
-                            "Content-Type": "application/json",
-                            "Authorization": `Bot ${this.token}`
-                        }
-                    }).then(d => res(new Emoji(d.data))).catch(e => rej(JSON.stringify(e.data.errors)));
-                }).catch(e => rej(JSON.stringify(e.data.errors)));
+                    }});
+                    res(new Emoji(x));
+                }).catch(e => rej(e));
             } catch (e) {
-                if("data" in e && "errors" in e.data){
-                    rej(JSON.stringify(e.data.errors));
+                if("data" in e){
+                    rej(JSON.stringify(e.data));
                 } else {
                     rej(e);
                 }
@@ -127,11 +125,16 @@ export default class Client extends EventEmitter {
         });
     }
 
-    getEmoji(guildid:string, id:string): Promise<Emoji>{
+    getEmoji(guildid:string, id?:string): Promise<Emoji | Emoji[]>{
         return new Promise(async (res,rej)=>{
             try {
-                const x = await this.rest.get(Routes.guildEmoji(guildid,id));
-                res(new Emoji(x));
+                let x;
+                if(id) {
+                    x = new Emoji(await this.rest.get(Routes.guildEmoji(guildid, id)));
+                } else {
+                    x = (await this.rest.get(Routes.guildEmojis(guildid))).map(raw => new Emoji(raw));
+                }
+                res(x);
             } catch(e) {
                 rej(e);
             }
@@ -149,6 +152,17 @@ export default class Client extends EventEmitter {
                     }
                 });
                 res(null);
+            } catch(e) {
+                rej(e);
+            }
+        });
+    }
+
+    removeEmoji(guildid:string, id:string){
+        return new Promise(async (res,rej)=>{
+            try {
+                const x = await this.rest.delete(Routes.guildEmoji(guildid,id));
+                res(x);
             } catch(e) {
                 rej(e);
             }
