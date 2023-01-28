@@ -117,7 +117,6 @@ export class Interaction {
     delete(){
         return new Promise(async (res,rej)=>{
             try {
-                await this.client.rest.post(Routes.interactionCallback(this.id,this.token), {body: {type: 6}});
                 const reply = await this.client.rest.delete(Routes.webhookMessage(this.applicationId,this.token,"@original"));
                 res(reply);
             } catch(e){
