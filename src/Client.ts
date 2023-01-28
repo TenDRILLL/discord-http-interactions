@@ -169,10 +169,10 @@ export default class Client extends EventEmitter {
         });
     }
 
-    deleteWebhookMessage(applicationId: string, webhookMessageToken: string){
+    deleteWebhookMessage(applicationId: string, webhookMessageToken: string, messageId?: string){
         return new Promise(async (res,rej)=>{
             try {
-                const reply = await this.rest.delete(Routes.webhookMessage(applicationId,webhookMessageToken,"@original"));
+                const reply = await this.rest.delete(Routes.webhookMessage(applicationId,webhookMessageToken,messageId ?? "@original"));
                 res(reply);
             } catch(e){
                 rej(e);
