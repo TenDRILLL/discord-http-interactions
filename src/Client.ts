@@ -13,6 +13,7 @@ import {GuildMember} from "./structures/GuildMember";
 import axios from "axios";
 import Emoji from "./structures/Emoji";
 import {Message} from "./structures/Message";
+import {InteractionReplyData} from "./structures/InteractionReplyDataType";
 
 export default class Client extends EventEmitter {
     private readonly token: string | null;
@@ -170,10 +171,11 @@ export default class Client extends EventEmitter {
         });
     }
 
-    editWebhookMessage(applicationId: string, webhookMessageToken: string, messageId?: string){
+    editWebhookMessage(applicationId: string, webhookMessageToken: string, data: InteractionReplyData, messageId?: string){
         return new Promise(async (res,rej)=>{
             try {
-                await this.rest.patch(Routes.webhookMessage(applicationId,webhookMessageToken,messageId ?? "@original"));
+                data = this._formatData(data);
+                await this.rest.patch(Routes.webhookMessage(applicationId,webhookMessageToken,messageId ?? "@original"),{body: data});
                 const reply = new Message(await this.rest.get(Routes.webhookMessage(applicationId,webhookMessageToken,messageId ?? "@original")));
                 res(reply);
             } catch(e){
@@ -191,6 +193,27 @@ export default class Client extends EventEmitter {
                 rej(e);
             }
         });
+    }
+
+    _formatData(data){
+        data["flags"] = 0;
+        if("ephemeral" in data && data.ephemeral === true){
+            data["flags"] |= 1 << 6;
+            delete data.ephemeral;
+        }
+        if("suppressEmbeds" in data && data.suppressEmbeds === true){
+            data["flags"] |= 1 << 2;
+            delete data.suppressEmbeds;
+        }
+        if("allowedMentions" in data && data.allowedMentions !== undefined){
+            data["allowed_mentions"] = data.allowedMentions;
+            if("repliedUser" in data && data.allowedMentions.repliedUser !== undefined){
+                data["allowed_mentions"]["replied_user"] = data.allowedMentions.repliedUser;
+                delete data["allowed_mentions"]["repliedUser"];
+            }
+            delete data.allowedMentions;
+        }
+        return data;
     }
 }
 
