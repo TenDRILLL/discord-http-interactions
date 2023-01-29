@@ -12,6 +12,7 @@ import ApplicationCommandObject from "./structures/ApplicationCommandObject";
 import {GuildMember} from "./structures/GuildMember";
 import axios from "axios";
 import Emoji from "./structures/Emoji";
+import {Message} from "./structures/Message";
 
 export default class Client extends EventEmitter {
     private readonly token: string | null;
@@ -164,6 +165,18 @@ export default class Client extends EventEmitter {
                 const x = await this.rest.delete(Routes.guildEmoji(guildid,id));
                 res(x);
             } catch(e) {
+                rej(e);
+            }
+        });
+    }
+
+    editWebhookMessage(applicationId: string, webhookMessageToken: string, messageId?: string){
+        return new Promise(async (res,rej)=>{
+            try {
+                await this.rest.patch(Routes.webhookMessage(applicationId,webhookMessageToken,messageId ?? "@original"));
+                const reply = new Message(await this.rest.get(Routes.webhookMessage(applicationId,webhookMessageToken,messageId ?? "@original")));
+                res(reply);
+            } catch(e){
                 rej(e);
             }
         });
