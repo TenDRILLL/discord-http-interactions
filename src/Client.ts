@@ -68,14 +68,12 @@ export default class Client extends EventEmitter {
         });
     }
 
-    sendDM(userId: string, data: MessageCreateData){
-        if(data.suppressEmbeds){
-            data["suppress_embeds"] = data.suppressEmbeds;
-            delete data.suppressEmbeds;
-        }
+    getDMChannel(userId: string){
         return new Promise(async (res, rej) => {
             try {
-                data["recipient_id"] = userId;
+                const data = {
+                    recipient_id: userId
+                };
                 const x = await this.rest.post(Routes.userChannels(),{body: data});
                 res(x);
             } catch(e) {
