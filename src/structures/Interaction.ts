@@ -40,12 +40,13 @@ export class Interaction {
         this.client = client;
     }
 
-    reply(data: InteractionReplyData){
+    reply(data: InteractionReplyData): Promise<Interaction>{
         data = this._formatData(data);
         return new Promise(async (res,rej)=>{
             try {
-                const reply = await this.client.rest.post(Routes.interactionCallback(this.id,this.token),{body: {type: 4, data}});
-                res(reply);
+                await this.client.rest.post(Routes.interactionCallback(this.id,this.token),{body: {type: 4, data}});
+                this.message = new Message(await this.client.rest.get(Routes.webhookMessage(this.applicationId,this.token,"@original")));
+                res(this);
             } catch(e){
                 rej(e);
             }
@@ -64,84 +65,86 @@ export class Interaction {
         });
     }
 
-    editReply(data: InteractionReplyData){
+    editReply(data: InteractionReplyData): Promise<Interaction>{
         data = this._formatData(data);
         return new Promise(async (res,rej)=>{
             try {
-                const reply = await this.client.rest.patch(Routes.webhookMessage(this.applicationId,this.token,"@original"),{body: data});
-                res(reply);
+                await this.client.rest.patch(Routes.webhookMessage(this.applicationId,this.token,"@original"),{body: data});
+                this.message = new Message(await this.client.rest.get(Routes.webhookMessage(this.applicationId,this.token,"@original")));
+                res(this);
             } catch(e){
                 rej(e);
             }
         });
     }
 
-    defer(data?: InteractionDeferData){
+    defer(data?: InteractionDeferData): Promise<Interaction>{
         if(data === undefined) data = {};
         data = this._formatData(data);
         return new Promise(async (res,rej)=>{
             try {
-                const reply = await this.client.rest.post(Routes.interactionCallback(this.id,this.token),{body: {type: 5, data}});
-                res(reply);
+                await this.client.rest.post(Routes.interactionCallback(this.id,this.token),{body: {type: 5, data}});
+                res(this);
             } catch(e){
                 rej(e);
             }
         });
     }
 
-    deferUpdate(){
+    deferUpdate(): Promise<Interaction>{
         const data = {};
         return new Promise(async (res,rej)=>{
             try {
-                const reply = await this.client.rest.post(Routes.interactionCallback(this.id,this.token), {body: {type: 6, data}});
-                res(reply);
+                await this.client.rest.post(Routes.interactionCallback(this.id,this.token), {body: {type: 6, data}});
+                res(this);
             } catch(e){
                 rej(e);
             }
         });
     }
 
-    update(data?: InteractionReplyData){
+    update(data?: InteractionReplyData): Promise<Interaction>{
         if(data === undefined) data = {};
         data = this._formatData(data);
         return new Promise(async (res,rej)=>{
             try {
-                const reply = await this.client.rest.post(Routes.interactionCallback(this.id,this.token), {body: {type: 7, data}});
-                res(reply);
+                await this.client.rest.post(Routes.interactionCallback(this.id,this.token), {body: {type: 7, data}});
+                this.message = new Message(await this.client.rest.get(Routes.webhookMessage(this.applicationId,this.token,"@original")));
+                res(this);
             } catch(e){
                 rej(e);
             }
         });
     }
 
-    delete(){
+    delete(): Promise<Interaction>{
         return new Promise(async (res,rej)=>{
             try {
-                const reply = await this.client.rest.delete(Routes.webhookMessage(this.applicationId,this.token,"@original"));
-                res(reply);
+                await this.client.rest.delete(Routes.webhookMessage(this.applicationId,this.token,"@original"));
+                res(this);
             } catch(e){
                 rej(e);
             }
         });
     }
 
-    autocomplete(data: AutocompleteChoice[]){
+    autocomplete(data: AutocompleteChoice[]): Promise<Interaction>{
         return new Promise(async (res,rej)=>{
             try {
-                const reply = await this.client.rest.post(Routes.interactionCallback(this.id,this.token),{body: {type: 8, data: {choices: data}}});
-                res(reply);
+                await this.client.rest.post(Routes.interactionCallback(this.id,this.token),{body: {type: 8, data: {choices: data}}});
+                res(this);
             } catch(e){
                 rej(e);
             }
         });
     }
 
-    modal(modal: Modal){
+    modal(modal: Modal): Promise<Interaction>{
         modal = this._formatModal(modal);
         return new Promise(async (res,rej)=>{
             try {
-                const reply = await this.client.rest.post(Routes.interactionCallback(this.id,this.token), {body: {type: 9, data: modal}});
-                res(reply);
+                await this.client.rest.post(Routes.interactionCallback(this.id,this.token), {body: {type: 9, data: modal}});
+                res(this);
             } catch(e){
                 rej(e);
             }
