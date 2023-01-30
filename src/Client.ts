@@ -65,7 +65,7 @@ export default class Client extends EventEmitter {
         });
     }
 
-    editMessage(channelId: string, messageId:string, data: MessageCreateData){
+    editMessage(channelId: string, messageId: string, data: MessageCreateData){
         data = this._formatData(data);
         return new Promise(async (res, rej) => {
             try {
@@ -73,6 +73,17 @@ export default class Client extends EventEmitter {
                 const x = new Message(await this.rest.get(Routes.channelMessage(channelId, messageId)));
                 res(x);
             } catch(e) {
+                rej(e);
+            }
+        });
+    }
+
+    deleteMessage(channelId: string, messageId: string){
+        return new Promise(async (res, rej)=>{
+            try {
+                const x = await this.rest.delete(Routes.channelMessage(channelId, messageId));
+                res(x);
+            } catch(e){
                 rej(e);
             }
         });
