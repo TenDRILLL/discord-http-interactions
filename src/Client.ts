@@ -54,13 +54,23 @@ export default class Client extends EventEmitter {
     }
 
     newMessage(channelId: string, data: MessageCreateData){
-        if(data.suppressEmbeds){
-            data["suppress_embeds"] = data.suppressEmbeds;
-            delete data.suppressEmbeds;
-        }
+        data = this._formatData(data);
         return new Promise(async (res, rej) => {
             try {
-                const x = await this.rest.post(Routes.channelMessages(channelId),{body: data});
+                const x = new Message(await this.rest.post(Routes.channelMessages(channelId),{body: data}));
+                res(x);
+            } catch(e) {
+                rej(e);
+            }
+        });
+    }
+
+    editMessage(channelId: string, messageId:string, data: MessageCreateData){
+        data = this._formatData(data);
+        return new Promise(async (res, rej) => {
+            try {
+                await this.rest.patch(Routes.channelMessage(channelId, messageId),{body: data});
+                const x = new Message(await this.rest.get(Routes.channelMessage(channelId, messageId)));
                 res(x);
             } catch(e) {
                 rej(e);
