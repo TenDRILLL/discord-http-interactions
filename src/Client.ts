@@ -89,6 +89,17 @@ export default class Client extends EventEmitter {
         });
     }
 
+    getMessage(channelId: string, messageId: string){
+        return new Promise(async (res, rej)=>{
+            try {
+                const x = await this.rest.get(Routes.channelMessage(channelId, messageId));
+                res(new Message(x));
+            } catch(e){
+                rej(e);
+            }
+        });
+    }
+
     getDMChannel(userId: string){
         return new Promise(async (res, rej) => {
             try {
