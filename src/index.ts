@@ -12,6 +12,7 @@ import ChannelType from "./structures/ChannelType";
 import InteractionType from "./structures/InteractionType";
 import MessageComponentType from "./structures/MessageComponentType";
 import TextInputStyle from "./structures/TextInputStyle";
+import SelectMenuType from "./structures/SelectMenuType";
 
 export {
     ActionRow,
@@ -27,5 +28,6 @@ export {
     ChannelType,
     InteractionType,
     MessageComponentType,
-    TextInputStyle
+    TextInputStyle,
+    SelectMenuType
 };

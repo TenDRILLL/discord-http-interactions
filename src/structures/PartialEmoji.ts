@@ -5,7 +5,7 @@ export class PartialEmoji {
     public name: string | null;
     public animated: boolean | null;
 
-    constructor(raw: APIPartialEmoji | APIMessageComponentEmoji) {
+    constructor(raw: APIPartialEmoji | APIMessageComponentEmoji | PartialEmoji) {
         this.id = raw.id ?? null;
         this.name = raw.name ?? null;
         this.animated = raw.animated ?? null;
