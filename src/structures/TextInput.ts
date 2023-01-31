@@ -57,4 +57,9 @@ export default class TextInput extends ModalActionRowComponent {
         this.required = required;
         return this;
     }
+
+    setValue(value: string): TextInput {
+        this.value = value;
+        return this;
+    }
 }
