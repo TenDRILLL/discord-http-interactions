@@ -2,7 +2,7 @@ import {SelectMenuComponent} from "./SelectMenuComponent";
 import {APIStringSelectComponent} from "discord-api-types/v10";
 import {SelectMenuOption} from "./SelectMenuOption";
 
-export class StringSelectMenu extends SelectMenuComponent {
+export default class StringSelectMenu extends SelectMenuComponent {
     public options: SelectMenuOption[];
 
     constructor(raw?: APIStringSelectComponent) {

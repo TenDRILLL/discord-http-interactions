@@ -5,6 +5,11 @@ import Embed from "./structures/Embed";
 import Emoji from "./structures/Emoji";
 import Modal from "./structures/Modal";
 import TextInput from "./structures/TextInput";
+import ChannelSelectMenu from "./structures/ChannelSelectMenu";
+import MentionableSelectMenu from "./structures/MentionableSelectMenu";
+import RoleSelectMenu from "./structures/RoleSelectMenu";
+import UserSelectMenu from "./structures/UserSelectMenu";
+import StringSelectMenu from "./structures/StringSelectMenu";
 import ApplicationCommandType from "./structures/ApplicationCommandType";
 import ApplicationCommandOptionType from "./structures/ApplicationCommandOptionType";
 import ButtonStyle from "./structures/ButtonStyle";
@@ -22,6 +27,11 @@ export {
     Emoji,
     Modal,
     TextInput,
+    ChannelSelectMenu,
+    MentionableSelectMenu,
+    RoleSelectMenu,
+    UserSelectMenu,
+    StringSelectMenu,
     ApplicationCommandType,
     ApplicationCommandOptionType,
     ButtonStyle,

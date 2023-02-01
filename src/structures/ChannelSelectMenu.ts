@@ -1,7 +1,7 @@
 import {SelectMenuComponent} from "./SelectMenuComponent";
 import {APIChannelSelectComponent} from "discord-api-types/v10";
 
-export class ChannelSelectMenu extends SelectMenuComponent {
+export default class ChannelSelectMenu extends SelectMenuComponent {
     public channel_types: number[] | null;
 
     constructor(raw?: APIChannelSelectComponent) {

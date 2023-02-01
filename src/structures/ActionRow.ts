@@ -5,11 +5,11 @@ import {
     ComponentType
 } from "discord-api-types/v10";
 import Button from "./Button";
-import {StringSelectMenu} from "./StringSelectMenu";
-import {ChannelSelectMenu} from "./ChannelSelectMenu";
-import {MentionableSelectMenu} from "./MentionableSelectMenu";
-import {RoleSelectMenu} from "./RoleSelectMenu";
-import {UserSelectMenu} from "./UserSelectMenu";
+import StringSelectMenu from "./StringSelectMenu";
+import ChannelSelectMenu from "./ChannelSelectMenu";
+import MentionableSelectMenu from "./MentionableSelectMenu";
+import RoleSelectMenu from "./RoleSelectMenu";
+import UserSelectMenu from "./UserSelectMenu";
 import TextInput from "./TextInput";
 import MessageComponentType from "./MessageComponentType";
 import {ModalActionRowComponent} from "./ModalActionRowComponent";
