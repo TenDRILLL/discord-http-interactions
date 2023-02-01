@@ -1,13 +1,13 @@
 const SelectMenuType = {
-    Text: 3,
+    String: 3,
     User: 5,
     Role: 6,
     Mentionable: 7,
-    Channels: 8,
-    3: "Text",
+    Channel: 8,
+    3: "String",
     5: "User",
     6: "Role",
     7: "Mentionable",
-    8: "Channels"
+    8: "Channel"
 };
 export default SelectMenuType;

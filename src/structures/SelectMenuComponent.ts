@@ -41,9 +41,4 @@ export class SelectMenuComponent {
         this.disabled = isDisabled;
         return this;
     }
-
-    setType(type: number): SelectMenuComponent {
-        this.type = type;
-        return this;
-    }
 }

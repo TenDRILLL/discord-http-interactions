@@ -1,6 +1,7 @@
 import {SelectMenuComponent} from "./SelectMenuComponent";
 import {APIStringSelectComponent} from "discord-api-types/v10";
 import {SelectMenuOption} from "./SelectMenuOption";
+import SelectMenuType from "./SelectMenuType";
 
 export default class StringSelectMenu extends SelectMenuComponent {
     public options: SelectMenuOption[];
@@ -8,6 +9,7 @@ export default class StringSelectMenu extends SelectMenuComponent {
     constructor(raw?: APIStringSelectComponent) {
         super(raw);
         this.options = raw?.options.map(rawSelectMenuOption => new SelectMenuOption(rawSelectMenuOption)) ?? [];
+        this.type = SelectMenuType.String;
     }
 
     setOptions(options: SelectMenuOption[]): StringSelectMenu{
