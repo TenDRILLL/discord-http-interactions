@@ -1,5 +1,9 @@
 import {User} from "./User";
-import {APIGuildMember, APIInteractionGuildMember} from "discord-api-types/v10";
+import {
+    APIGuildMember,
+    APIInteractionGuildMember,
+    PartialAPIMessageInteractionGuildMember
+} from "discord-api-types/v10";
 import {PartialGuildMember} from "./PartialGuildMember";
 import {Permissions} from "./Permissions";
 
@@ -15,11 +19,11 @@ export class GuildMember extends PartialGuildMember {
     public permissions: Permissions | null; //Discord API claims to have this, but DAPI doesn't.
     public communicationDisabledUntil: string | null;
 
-    constructor(raw: APIGuildMember | APIInteractionGuildMember) {
+    constructor(raw: APIGuildMember | APIInteractionGuildMember | PartialAPIMessageInteractionGuildMember) {
         super(raw);
         this.deaf = raw.deaf;
         this.mute = raw.mute;
-        this.user = raw.user ? new User(raw.user) : null;
+        this.user = "user" in raw && raw.user !== undefined ? new User(raw.user) : null;
         this.avatar = raw.avatar ?? (this.user !== null && this.user.avatar !== null) ? this.user!.avatar : null;
         this.roles = raw.roles;
         this.nick = raw.nick ?? null;

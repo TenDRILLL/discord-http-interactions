@@ -1,4 +1,8 @@
-import {APIGuildMember, APIInteractionDataResolvedGuildMember} from "discord-api-types/v10";
+import {
+    APIGuildMember,
+    APIInteractionDataResolvedGuildMember,
+    PartialAPIMessageInteractionGuildMember
+} from "discord-api-types/v10";
 
 export class PartialGuildMember {
     public nick: string | null;
@@ -11,7 +15,7 @@ export class PartialGuildMember {
     public pending: boolean | null;
     public communicationDisabledUntil: string | null;
 
-    constructor(raw: APIGuildMember | APIInteractionDataResolvedGuildMember) {
+    constructor(raw: APIGuildMember | APIInteractionDataResolvedGuildMember | PartialAPIMessageInteractionGuildMember) {
         this.nick = raw.nick ?? null;
         this.avatar = raw.avatar ?? null;
         this.roles = raw.roles;
