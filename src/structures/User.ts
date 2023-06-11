@@ -4,6 +4,7 @@ export class User {
     public id: string;
     public username: string;
     public discriminator: string;
+    public globalName: string | null;
     public avatar: string | null;
     public bot: boolean | null;
     public system: boolean | null;
@@ -17,11 +18,12 @@ export class User {
     public premiumType: number | null;
     public publicFlags: number | null;
 
-    constructor(raw: APIUser) {
+    constructor(raw: APIUser & {global_name?: string}) {
         this.id = raw.id;
         this.username = raw.username;
         this.discriminator = raw.discriminator;
-        this.avatar = raw.avatar ?? null;
+        this.globalName = raw.global_name ?? null;
+        this.avatar = raw.avatar ?? `${this.globalName !== null ? (+this.id >> 22) % 6 : +this.discriminator % 5}`;
         this.bot = raw.bot ?? null;
         this.system = raw.system ?? null;
         this.mfaEnabled = raw.mfa_enabled ?? null;

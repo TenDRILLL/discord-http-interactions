@@ -20,7 +20,7 @@ export class GuildMember extends PartialGuildMember {
         this.deaf = raw.deaf;
         this.mute = raw.mute;
         this.user = raw.user ? new User(raw.user) : null;
-        this.avatar = raw.avatar ?? null;
+        this.avatar = raw.avatar ?? (this.user !== null && this.user.avatar !== null) ? this.user!.avatar : null;
         this.roles = raw.roles;
         this.nick = raw.nick ?? null;
         this.joinedAt = raw.joined_at ?? null;
